@@ -1,4 +1,4 @@
-package com.hisao.qdrestaurant;
+package com.hisao.qdrestaurant.database;
 
 import com.hisao.qdrestaurant.model.Customer;
 

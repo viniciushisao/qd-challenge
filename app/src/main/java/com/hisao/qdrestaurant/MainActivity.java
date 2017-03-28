@@ -1,20 +1,25 @@
 package com.hisao.qdrestaurant;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.hisao.qdrestaurant.database.DbHelper;
+import com.hisao.qdrestaurant.database.QdWebApi;
+import com.hisao.qdrestaurant.fragment.CustomerFragment;
 import com.hisao.qdrestaurant.model.Customer;
 import com.hisao.qdrestaurant.model.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CustomerFragment.OnListFragmentInteractionListener{
 
     private DbHelper dbHelper;
 
@@ -24,9 +29,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dbHelper = new DbHelper(getApplicationContext());
 
-//        this.retrieveCustomers();
-        this.retrieveTables();
+        this.retrieveCustomers();
+//        this.retrieveTables();
+
     }
+
+
 
     private void retrieveCustomers(){
         Call<List<Customer>> listCustomers = QdWebApi.getQdApiInterface().getCustomers();
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Vai ", customer.toString());
                 }
 
+                showCustomers(customers);
+
             }
 
             @Override
@@ -55,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showCustomers(List<Customer> customers){
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(android.R.id.content, CustomerFragment.newInstance(customers.size(), new ArrayList<Customer>(customers)));
+        fragmentTransaction.commit();
     }
 
     private void retrieveTables(){
@@ -87,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Customer customer) {
 
     }
 }
