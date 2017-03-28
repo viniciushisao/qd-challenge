@@ -1,5 +1,7 @@
 package com.hisao.qdrestaurant;
 
+import com.hisao.qdrestaurant.model.Customer;
+
 import java.util.List;
 
 import retrofit2.Call;

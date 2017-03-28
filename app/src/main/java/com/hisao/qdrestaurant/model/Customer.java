@@ -1,4 +1,4 @@
-package com.hisao.qdrestaurant;
+package com.hisao.qdrestaurant.model;
 
 
 import android.os.Parcel;
@@ -83,4 +83,8 @@ public class Customer implements Parcelable {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return this.id + "ID: " + this.id + " FIRST NAME: " + this.customerFirstName + " SECOND NAME: " + this.customerLastName;
+    }
 }
