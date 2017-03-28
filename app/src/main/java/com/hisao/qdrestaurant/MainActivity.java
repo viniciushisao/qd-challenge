@@ -1,12 +1,8 @@
 package com.hisao.qdrestaurant;
 
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.hisao.qdrestaurant.database.DbHelper;
 import com.hisao.qdrestaurant.model.Customer;
@@ -56,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void showCustomers(List<Customer> customers){
+
     }
 
     private void retrieveTables(){
