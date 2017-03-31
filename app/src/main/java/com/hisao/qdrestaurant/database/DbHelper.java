@@ -1,9 +1,5 @@
 package com.hisao.qdrestaurant.database;
 
-import java.util.LinkedList;
-import java.util.List;
-
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.hisao.qdrestaurant.model.Customer;
 import com.hisao.qdrestaurant.model.Table;
+import com.hisao.qdrestaurant.util.Log;
+
+import java.util.ArrayList;
 
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -72,7 +71,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
 
-        db.close();
     }
 
     public void addTable(Table table) {
@@ -84,12 +82,11 @@ public class DbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_TABLE, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
-
-        db.close();
     }
 
-    public List<Customer> getAllCustomers() {
-        List<Customer> customers = new LinkedList<Customer>();
+
+    public ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
         String query = "SELECT  * FROM " + CUSTOMER_TABLE;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -105,11 +102,58 @@ public class DbHelper extends SQLiteOpenHelper {
                 customers.add(customer);
             } while (cursor.moveToNext());
         }
+        cursor.close();
+        db.close();
         return customers;
     }
 
-    public List<Table> getAllTables() {
-        List<Table> tables = new LinkedList<>();
+    public int setOcupancyTable(boolean value, int idTable){
+
+            // 1. get reference to writable DB
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            // 2. create ContentValues to add key "column"/value
+            ContentValues values = new ContentValues();
+            values.put(TABLE_KEY_OCUPIED, value);
+
+            // 3. updating row
+            int i = db.update(TABLE_TABLE, //table
+                    values, // column/value
+                    TABLE_KEY_ID + " = ?", // selections
+                    new String[]{String.valueOf(idTable)}); //selection args
+
+            // 4. close
+            db.close();
+        Log.d("DbHelper:setOcupancyTable:127 " + i);
+
+        return i;
+    }
+
+    public int setAllTablesEmpty(){
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(TABLE_KEY_OCUPIED, false);
+
+        // 3. updating row
+        int i = db.update(TABLE_TABLE, //table
+                values, // column/value
+                null, // selections
+                null); //selection args
+
+        // 4. close
+        db.close();
+
+        Log.d("DbHelper:setAllTablesEmpty:148 " + i);
+
+        return i;
+    }
+
+    public ArrayList<Table> getAllTables() {
+        ArrayList<Table> tables = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_TABLE;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);

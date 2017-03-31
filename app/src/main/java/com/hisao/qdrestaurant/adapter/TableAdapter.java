@@ -7,41 +7,45 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hisao.qdrestaurant.R;
-import com.hisao.qdrestaurant.fragment.CustomerFragment.CustomerFragmentInteractionListener;
-import com.hisao.qdrestaurant.model.Customer;
-import com.hisao.qdrestaurant.util.Log;
+import com.hisao.qdrestaurant.fragment.TableFragment.TableFragmentInteractionListener;
+import com.hisao.qdrestaurant.model.Table;
 
 import java.util.List;
 
-public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHolder> {
 
-    private final List<Customer> customerList;
-    private final CustomerFragmentInteractionListener mListener;
+public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> {
 
-    public CustomerAdapter(List<Customer> customers, CustomerFragmentInteractionListener listener) {
-        customerList = customers;
+    private final List<Table> tables;
+    private final TableFragmentInteractionListener mListener;
+
+    public TableAdapter(List<Table> items, TableFragmentInteractionListener listener) {
+        tables = items;
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_customer, parent, false);
+                .inflate(R.layout.fragment_table, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.customer = customerList.get(position);
-        holder.mIdView.setText(String.valueOf(holder.customer.getId()));
-        holder.mContentView.setText(holder.customer.getFirstName());
+        holder.mTable = tables.get(position);
+        holder.mIdView.setText(String.valueOf(holder.mTable.getId()) );
+        if (!holder.mTable.isOcupied()){
+            holder.mContentView.setVisibility(View.VISIBLE);
+            holder.mContentView.setText("FREE");
+        }else{
+            holder.mContentView.setVisibility(View.INVISIBLE);
+        }
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onCustomerFragmentInteraction(holder.customer);
+                    mListener.onTableFragmentListInteraction(holder.mTable);
                 }
             }
         });
@@ -49,14 +53,14 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return customerList.size();
+        return tables.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Customer customer;
+        public Table mTable;
 
         public ViewHolder(View view) {
             super(view);

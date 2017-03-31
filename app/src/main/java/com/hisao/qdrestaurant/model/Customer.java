@@ -85,6 +85,6 @@ public class Customer implements Parcelable {
 
     @Override
     public String toString() {
-        return this.id + "ID: " + this.id + " FIRST NAME: " + this.customerFirstName + " SECOND NAME: " + this.customerLastName;
+        return this.id + " ID: " + this.id + " FIRST NAME: " + this.customerFirstName + " SECOND NAME: " + this.customerLastName;
     }
 }

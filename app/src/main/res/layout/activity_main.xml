@@ -4,8 +4,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/rl_main"
     android:layout_height="match_parent"
     tools:context="com.hisao.qdrestaurant.MainActivity">
-
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+    <TextView
+        android:layout_above="@id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Loading stuff from internet"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
