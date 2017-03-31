@@ -27,13 +27,8 @@ public class TableFragment extends Fragment {
     private ArrayList<Table> tableArrayList;
     private Customer customer;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public TableFragment() {
     }
-
 
     public static TableFragment newInstance(ArrayList<Table> tables, Customer customer) {
         TableFragment fragment = new TableFragment();
@@ -90,7 +85,6 @@ public class TableFragment extends Fragment {
 
 
     public interface TableFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onTableFragmentListInteraction(Table table);
     }
 }

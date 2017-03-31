@@ -12,7 +12,6 @@ import java.util.Map;
  * Created by vinicius on 24/03/17.
  */
 
-
 public class Customer implements Parcelable {
 
     private String customerFirstName;

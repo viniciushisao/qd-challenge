@@ -38,7 +38,6 @@ public class DbHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-
     // Customer table name
     private static final String CUSTOMER_TABLE = "customer";
     private static final String CUSTOMER_KEY_ID = "id";
