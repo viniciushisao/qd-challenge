@@ -17,7 +17,6 @@ import com.hisao.qdrestaurant.fragment.TableFragment;
 import com.hisao.qdrestaurant.model.Customer;
 import com.hisao.qdrestaurant.model.Table;
 import com.hisao.qdrestaurant.service.QdService;
-import com.hisao.qdrestaurant.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +62,19 @@ public class MainActivity extends AppCompatActivity implements CustomerFragment.
         this.retrieveTables();
     }
 
+    private void failedRetrieveFromInternet() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Failed")
+                .setCancelable(false)
+                .setMessage("Failed to load data from web. Check your internet connection and try again")
+                .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        retrieveData();
+                    }
+                }).show();
+    }
+
     private void retrieveCustomers() {
 
         //prior local data
@@ -89,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements CustomerFragment.
 
             @Override
             public void onFailure(Call<List<Customer>> call, Throwable t) {
+                failedRetrieveFromInternet();
             }
         });
     }
@@ -130,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements CustomerFragment.
 
             @Override
             public void onFailure(Call<boolean[]> call, Throwable t) {
-
+                failedRetrieveFromInternet();
             }
         });
     }
@@ -174,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements CustomerFragment.
 
                 }
             }).show();
-
         }
 
     }
